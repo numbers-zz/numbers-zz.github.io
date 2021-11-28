@@ -1,0 +1,69 @@
+body { background: #f5f5f5; color: #000000; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; font-size: 16px; margin: 0px; line-height: 1.4; }
+
+h1, h2, h3, h4, h5, h6 { margin: 0px; padding: 0px; font-weight: normal; }
+
+#titlebar { display: flex; flex-direction: column; justify-content: center; align-items: center; padding-top: 1rem; padding-bottom: 1rem; color: #f5f5f5; background-color: #393939; }
+
+#title { display: flex; align-items: center; font-size: 48px; margin: 1rem; font-weight: lighter; }
+
+#headerinfo { text-align: center; }
+
+#tagline { color: #8a8a8a; }
+
+#contentrow { justify-content: center; display: flex; }
+
+@media screen and (max-width: 850px) { #contentrow { justify-content: left; } }
+
+#sitelinks { display: flex; align-items: center; justify-content: center; padding-top: 10px; width: 100%; }
+
+#internal-links { text-align: right; }
+
+#social-links { display: flex; }
+
+.title-link { padding-right: 5px; padding-left: 5px; }
+
+.title-link:hover { text-decoration-line: underline; }
+
+.vertsep { border-left: 1px solid rgba(255, 255, 255, 0.5); height: 1.8em; margin-left: 5px; margin-right: 5px; }
+
+.hrule-80 { color: #ccc; width: 80%; margin-top: 1rem; }
+
+.cell-style { background-color: white; padding: 2rem; padding-top: 1rem; border-color: #acacac; border-radius: 8px; border-width: 1px; box-shadow: 0px 0px 7px #e6e6e6; }
+
+.post-title { text-align: center; }
+
+h3.post-subtitle { color: #acacac; text-align: center; font-weight: lighter; }
+
+.post-body > p { text-align: justify; }
+
+.post-item { margin-bottom: 1rem; }
+
+.post-content { text-align: justify; }
+
+.post-image { text-align: center; max-width: 100%; }
+
+.post-page-nav { display: flex; width: 100%; }
+
+.post-page-prev { width: 50%; text-align: left; justify-contents: center; }
+
+.post-page-next { width: 50%; text-align: right; justify-contents: center; }
+
+.post-background { padding: 3rem; }
+
+a.no-style { color: unset; text-decoration-line: unset; }
+
+a.no-style:hover { text-decoration-line: underline; }
+
+a.vert-center { display: flex; align-items: center; }
+
+.aligned-list { padding-left: 0px; }
+
+.no-bullet { list-style: none; }
+
+.leftcol { width: 0px; }
+
+.contentcol { padding: 1rem; padding-top: 2rem; width: 800px; }
+
+.rightcol { padding: 1rem; padding-top: 2rem; width: 350px; }
+
+/*# sourceMappingURL=main.css.map */

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <title>Feynman Diagrams II: Generating Functions - Disordered Thoughts</title>
+    <link rel="stylesheet" href="/assets/css/main.css">
+<link rel="alternate" type="application/atom+xml" title="Disordered Thoughts" href="/feed.xml">
+<link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+<link rel="shortcut icon" href="assets/images/logoicon.ico">
+	<!-- MathJax -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    },
+    tex2jax: {
+    inlineMath: [ ['\\(', '\\)'] ],
+    displayMath: [ ['\\[', '\\]'] ],
+    processEscapes: true,
+  }
+});
+MathJax.Hub.Register.MessageHook("Math Processing Error",function (message) {
+	  alert("Math Processing Error: "+message[1]);
+	});
+MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
+	  alert("Math Processing Error: "+message[1]);
+	});
+</script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+  </head>
+  <body>
+
+	<div id="titlebar">
+		<a class="no-style" href="/index.html"><div id="title"><img src="/assets/images/bloglogo.svg" style="width: 73.25px; height: 80px"></img><div style="padding-left:10px">Disordered Thoughts</div>
+		</div></a>
+		<div id="sitelinks">
+			<div id="internal-links">
+			<a href="/index.html" class="title-link no-style">Home</a>
+			<a href="/about.html" class="title-link no-style">About</a>
+			<a href="/archive.html" class="title-link no-style">Archive</a>
+			</div>
+			<div class="vertsep"></div>
+			<div id="social-links">
+			<a class="rss vert-center title-link" href="/feed.xml" target="_blank"><img src="/assets/images/rss-icon.svg" style="width: 17.3px; height:17.3px"></img></a> <a class="twitter vert-center title-link" href="https://twitter.com/RMastragostino"><img src="/assets/images/twitter-icon.svg" style="width:21.3px; height:17.3px"></img></a>
+			</div>
+		</div>
+	</div>
+	<div id="contentrow">
+		<div class="leftcol"></div>
+		<div class="contentcol">
+		    <div class="post-background cell-style">
+	<h1 class="post-title">Feynman Diagrams II: Generating Functions</h1>
+	<h3 class="post-subtitle">29 Aug 2021 - Robert Mastragostino</h3>
+	<hr class="hrule-80"/>
+	<div class="post-body">
+		<p><a href="/feynman-diagrams/2021/08/28/feynman-diagrams-1-introduction.html">Last time</a> we got a taste of how Feynman diagrams let us calculate physical quantities. We boiled down a complex physics expression to its bare essentials, calculated the contribution of an example diagram, and got a hint about what links the two. Today we’ll explain the central correspondence driving the theory, so that by the end you should be able to derive the main relationship on your own:</p>
+
+\[\underbrace{\vphantom{\frac g4}\exp}_{\text{Set}}
+\underbrace{(\frac g{4!}\partial_J^4)}_{\substack{\text{replace 4 $J$s}\\\text{with a $g$}}}
+\underbrace{\vphantom{\frac g4}\exp}_\text{Set}
+\underbrace{\vphantom{\frac g4}(J^2/2m)}_{\substack{\text{$1/m$ and} \\ \text{Pair($J$)}}}\]
+
+<h2 id="combinatorics-and-generating-functions">Combinatorics and generating functions</h2>
+
+<p>Since the idea of Feynman diagrams is to associate a family of graphs to a power series expansion, we should talk a bit about the general principle behind such correspondences. In general we have some set of ‘combinatorial objects’ of a given type (e.g. graphs), each of which consists of various elements (e.g. vertices). We associate a <em>size</em> to each object by the number of elements it contains. One of a combinatorialists favourite activities is taking various notions of ‘object’ and ‘element’ and counting how many objects there are of each size. If an object-type \(\mathcal{A}\) has \(a_n\) objects of size \(n\), our job is to find the list of numbers \(a_n\), which as far as enumeration goes totally specifies the object.
+[example]
+These species of objects have a sort of arithmetic on them that suggests a powerful principle for calculations:</p>
+
+<h3 id="disjoint-union">Disjoint union</h3>
+<p>Consider a type \(\mathcal{C}\) that is the <em>disjoint union</em> of \(\mathcal{A}\) and \(\mathcal{B}\): each \(\mathcal{C}\)-instance is either an \(\mathcal{A}\)-instance <em>or</em> a \(\mathcal{B}\)-instance. In this case we have \(c_n=a_n+b_n\), so this corresponds to addition of lists.
+[example]</p>
+<h3 id="cartesian-product">Cartesian Product</h3>
+<p>Consider a type \(\mathcal{C}\) where each object is a pair, consisting of an object from \(\mathcal{A}\) <em>and</em> an object from \(\mathcal{B}\). In this case \(c_n\) should still count objects of <em>total</em> size \(n\), which can be made by picking an \(\mathcal{A}\)-object of size \(k\) and a \(\mathcal{B}\) object of size \(n-k\) in all possible ways, for all \(k\). This leads to the requirement that</p>
+
+<p>\(c_n = \sum_{k=0}^n a_{k}b_{n-k}\)
+[example]
+but this should look familiar: it’s the formula for multiplying coefficients of power series! So if we represent our list of numbers as a series</p>
+
+\[A(x) = a_0+a_1x+a_2x^2+\cdots\]
+
+<p>Then we find that the Cartesian product satisfies \(C(x)=A(x)B(x)\). This is the key concept that relates combinatorics to the behaviour of functions, and will be our centerpiece going forward. This is called the <em>ordinary generating function</em> for the object-type we are analysing.</p>
+
+<h3 id="a-digression-on-the-exponential">A digression on the exponential.</h3>
+<p>The above story can be continued for quite awhile (see Chapter 2 of [cite]), but isn’t quite the one we need. The problem is that the formula <em>we’re</em> trying to understand has an exponential in it. It’s great that power series can represent counting problems, but the exponential function has a Taylor series \(e^{x}=\sum \frac{x^n}{n!}\), built of fractions. If we want this to be involved, the fractions need to be built in from the start:</p>
+
+<p>The <em>exponential</em> generating function of \(\mathcal{A}\)-objects is \(\sum \frac{a_nx^n}{n!}\)</p>
+
+<h3 id="labelled-cartesian-product">Labelled Cartesian Product</h3>
+
+<p>Addition can still represent disjoint union here, but it’s no longer clear what multiplication means. If I multiply two exponential generating functions together, I get the different relationship</p>
+
+\[c_n=\sum_{k=0}^n {n\choose k}a_kb_{n-k}\]
+
+<p>that’s not that bad, actually! If \(c_n\) counts something it counts a choice of \(\mathcal{A}\)-object, a choice of \(\mathcal{B}\)-object, <em>and a further choice</em> of \(k\) things out of \(n\). Well there are \(n\) elements, and \(k\) of them belong to the \(\mathcal{A}\)-object, so this suggests that the meaning of multiplication is including some extra element-data that has to be distributed among the pieces. In fact this is true: exponential generating functions naturally count <em>labelled</em> objects: objects equipped with labellings of their elements from 1 to \(n\).</p>
+
+<p>[example]</p>
+
+<p>These are what we will use exclusively going forward.</p>
+
+<h3 id="further-operations">Further Operations</h3>
+
+<p>n-Tuple: We call a single object of size \(n\), an \(n\)-tuple. It has generating function \(x^n/n!\): nth coefficient of 1 and zeros elsewhere. This corresponds to the arithmetic reasoning earlier, where an \(n\)-tuple of \(x\)’s is \(\underbrace{n\text{ times}}{x and x and x}\cdots\)</p>
+
+<p>SET: A set of elements is, as usual, just some (possibly empty) collection of elements. There is one of each size and it can only be labelled in one way, since all elements are identical. So the generating function of sets is \(\sum_{n=0}^\infty \frac{x^n}{n!} = e^{x}\). Equivalently, we have the decomposition</p>
+
+<p>SET = ZERO OR ONE OR TWO OR ….</p>
+
+<p><em>This is very important</em>.</p>
+
+<p>TREES
+(include??)</p>
+
+<h3 id="other-operations">Other operations</h3>
+
+<p>Composition - keep it light, reference chp 3 for the rest. Introduce idea that all G(x) are formally 0-G OR 1-G OR 2-G… so F(G(x)) counts F-structures whose elements have been replaced by G-structures in all possible ways.</p>
+
+<p>Point-delete: Given an object type of size \(n\), we can delete an element in \(n\) possible ways to produce an object of size \(n-1\). This enacts the transformation on each term \(x^n\to nx^{n-1}\). But this just the derivative! By linearity this works for any generating function. So derivatives are how we select (and delete) elements.</p>
+
+<p>Point-replace: to avoid deleting the element, we can place it back by multiplying by \(x\) again. We could also replace with some new element \(a\), if we wanted to keep track of which elements we’ve touched.</p>
+
+<p>2-point-replace: Point out that the included new piece has to be ‘associated’ with the particular choice of removed pieces, which is distinct from removing pairs and adding a’s separately.</p>
+
+<h3 id="wicks-theorem">Wick’s Theorem</h3>
+<p>exp(x^2/2) is set(pairs).</p>
+
+<p>###</p>
+
+
+	</div>
+	<hr class="hrule-80"/>
+	<div class="post-page-nav">
+		<div class="post-page-prev">
+		
+		<a href="/feynman-diagrams/2021/08/28/feynman-diagrams-1-introduction.html">
+		&#x226A;Feynman Diagrams I: Introduction and Background
+		</a>
+		
+		</div>
+		<div class="post-page-next">
+		
+		</div>
+
+	</div>
+</div>
+
+		</div>
+		<div class="rightcol">
+			<div class="cell-style">
+				<h2>Recent Posts</h2>
+				<hr>
+				<ul class="aligned-list">
+					
+					<a class="no-style" href=/feynman-diagrams/2021/08/29/feynman-diagrams-2-generating-functions-Copy.html>
+					<li class="no-bullet">Feynman Diagrams II: Generating Functions<hr style="color:#00000030"/></li></a>
+					
+					<a class="no-style" href=/feynman-diagrams/2021/08/28/feynman-diagrams-1-introduction.html>
+					<li class="no-bullet">Feynman Diagrams I: Introduction and Background<hr style="color:#00000030"/></li></a>
+					
+				</ul>
+			</div>
+		</div>
+  
+
+</div>  </body>
+</html>
