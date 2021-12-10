@@ -81,11 +81,11 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
 
 <p>While this is a little bit abstract, many directly measurable quantities you might want to calculate are only a short step away from the partition function itself. So if you can do this one calculation then you’ve basically “solved” the theory! Unfortunately there’s no free lunch here, and doing this calculation is in general quite difficult. Luckily it <em>is</em> doable when \(g=0\) and the quartic contribution disappears, which corresponds to a theory of non-interacting particles. This insight leads us to do perturbation theory in \(g\), which is where the organization by Feynman diagrams is helpful.</p>
 
-<p>Before getting into the diagrams themselves, let’s remove some clutter. First, the integral over spacetime on the inside of the exponential can go: the values of the field at different times are only linked in a “simple” way, through the first term (the Laplacian) and the core structure of Feynman diagrams is actually largely maintained if we focus on one isolated point. So instead of being a particle state or a field configuration, we’ll drop the Laplacian term and just take \(\phi\) to be a number. Second, this dramatically simplifies the path-integral surrounding the whole thing: integrating over \(\phi\) is just an ordinary integral. So the main calculation we’ll be investigating for awhile is just</p>
+<p>Before getting into the diagrams themselves, let’s remove some clutter. First, the integral over spacetime on the inside of the exponential can go: the values of the field at different points are only linked in a “simple” way, through the first term (the Laplacian) and the core structure of Feynman diagrams is actually largely maintained if we focus on one isolated point. So instead of being a particle state or a field configuration, we’ll drop the Laplacian term and just take \(\phi\) to be a number. Second, this dramatically simplifies the path-integral surrounding the whole thing: integrating over \(\phi\) is just an ordinary integral. So the main calculation we’ll be investigating for awhile is just</p>
 
 \[Z[J]=\int e^{-(\frac 12m\phi^2+\frac{g}{4!}\phi^4-J\phi)} d\phi.\]
 
-<p>Much nicer.</p>
+<p>Much nicer. Diagrams aren’t practically helpful here since just taking the derivatives is so simple, but this is a good place to start.</p>
 
 <h2 id="the-feynman-trick">The Feynman Trick</h2>
 
@@ -97,11 +97,11 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
 
 \[Z[J]=\frac 1{\sqrt{2\pi m}}e^{\frac{g}{4!}\frac {d^4}{dJ^4}}e^{J^2/2m}\]
 
-<p>Going forward we will drop the \(m\)-prefactor, since for our purposes it’s just a constant that isn’t really relevant to the diagrams. At this point we’ve brought the partition function down into the form we saw at the beginning.</p>
+<p>Going forward we will drop the \(1/\sqrt{2\pi m}\)-prefactor, since for our purposes it’s just a constant that isn’t really relevant to the diagrams. At this point we’ve brought the partition function down into the form we saw at the beginning. While integrals don’t really have a combinatorial description, derivatives <em>do</em>, as we’ll see, so this move gives us a good setup to bring diagrams into the picture.</p>
 
 <h2 id="calculating-with-diagrams">Calculating with Diagrams</h2>
 
-<p>Now that the partition function has been nicely reduced, we’ll talk a bit about how Feynman diagrams actually work. To perform a calculation with Feynman diagrams:</p>
+<p>Now that the partition function has been nicely reduced, we’ll detour to talk a bit about how Feynman diagrams actually work once we have them. To perform a calculation with Feynman diagrams:</p>
 
 <ol>
   <li>Draw all possible networks with a given number of vertices, whose structure depends on the theory. In the case of \(\phi^4\) theory, each vertex that isn’t a dangling leaf has four vertices.</li>
@@ -135,7 +135,7 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
 		</div>
 		<div class="post-page-next">
 		
-		<a href="/feynman-diagrams/2021/08/29/feynman-diagrams-2-generating-functions-Copy.html">
+		<a href="/feynman-diagrams/2021/08/29/feynman-diagrams-2-generating-functions.html">
 		Feynman Diagrams II: Generating Functions &#x226B;
 		</a>
 		
@@ -151,7 +151,7 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
 				<hr>
 				<ul class="aligned-list">
 					
-					<a class="no-style" href=/feynman-diagrams/2021/08/29/feynman-diagrams-2-generating-functions-Copy.html>
+					<a class="no-style" href=/feynman-diagrams/2021/08/29/feynman-diagrams-2-generating-functions.html>
 					<li class="no-bullet">Feynman Diagrams II: Generating Functions<hr style="color:#00000030"/></li></a>
 					
 					<a class="no-style" href=/feynman-diagrams/2021/08/28/feynman-diagrams-1-introduction.html>

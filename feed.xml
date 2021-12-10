@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-11-27T19:32:05-05:00</updated><id>/feed.xml</id><title type="html">Disordered Thoughts</title><author><name>Robert Mastragostino</name></author><entry><title type="html">Feynman Diagrams II: Generating Functions</title><link href="/feynman-diagrams/2021/08/29/feynman-diagrams-2-generating-functions-Copy.html" rel="alternate" type="text/html" title="Feynman Diagrams II: Generating Functions" /><published>2021-08-29T01:12:40-04:00</published><updated>2021-08-29T01:12:40-04:00</updated><id>/feynman-diagrams/2021/08/29/feynman-diagrams-2-generating-functions%20-%20Copy</id><content type="html" xml:base="/feynman-diagrams/2021/08/29/feynman-diagrams-2-generating-functions-Copy.html">&lt;p&gt;&lt;a href=&quot;/feynman-diagrams/2021/08/28/feynman-diagrams-1-introduction.html&quot;&gt;Last time&lt;/a&gt; we got a taste of how Feynman diagrams let us calculate physical quantities. We boiled down a complex physics expression to its bare essentials, calculated the contribution of an example diagram, and got a hint about what links the two. Today we’ll explain the central correspondence driving the theory, so that by the end you should be able to derive the main relationship on your own:&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-10T12:58:27-05:00</updated><id>/feed.xml</id><title type="html">Disordered Thoughts</title><author><name>Robert Mastragostino</name></author><entry><title type="html">Feynman Diagrams II: Generating Functions</title><link href="/feynman-diagrams/2021/08/29/feynman-diagrams-2-generating-functions.html" rel="alternate" type="text/html" title="Feynman Diagrams II: Generating Functions" /><published>2021-08-29T01:12:40-04:00</published><updated>2021-08-29T01:12:40-04:00</updated><id>/feynman-diagrams/2021/08/29/feynman-diagrams-2-generating-functions</id><content type="html" xml:base="/feynman-diagrams/2021/08/29/feynman-diagrams-2-generating-functions.html">&lt;p&gt;&lt;a href=&quot;/feynman-diagrams/2021/08/28/feynman-diagrams-1-introduction.html&quot;&gt;Last time&lt;/a&gt; we got a taste of how Feynman diagrams let us calculate physical quantities. We boiled down a complex physics expression to its bare essentials, calculated the contribution of an example diagram, and got a hint about what links the two. Today we’ll explain the central correspondence driving the theory, so that we understand the meaning of all the ingredients in our expression:&lt;/p&gt;
 
 \[\underbrace{\vphantom{\frac g4}\exp}_{\text{Set}}
 \underbrace{(\frac g{4!}\partial_J^4)}_{\substack{\text{replace 4 $J$s}\\\text{with a $g$}}}
@@ -7,68 +7,84 @@
 
 &lt;h2 id=&quot;combinatorics-and-generating-functions&quot;&gt;Combinatorics and generating functions&lt;/h2&gt;
 
-&lt;p&gt;Since the idea of Feynman diagrams is to associate a family of graphs to a power series expansion, we should talk a bit about the general principle behind such correspondences. In general we have some set of ‘combinatorial objects’ of a given type (e.g. graphs), each of which consists of various elements (e.g. vertices). We associate a &lt;em&gt;size&lt;/em&gt; to each object by the number of elements it contains. One of a combinatorialists favourite activities is taking various notions of ‘object’ and ‘element’ and counting how many objects there are of each size. If an object-type \(\mathcal{A}\) has \(a_n\) objects of size \(n\), our job is to find the list of numbers \(a_n\), which as far as enumeration goes totally specifies the object.
-[example]
-These species of objects have a sort of arithmetic on them that suggests a powerful principle for calculations:&lt;/p&gt;
+&lt;p&gt;Since the idea of Feynman diagrams is to associate a family of graphs to a power series expansion, we should talk a bit about the general principle behind such correspondences. In general we have some set of ‘combinatorial objects’ of a given type (e.g. graphs), each of which consists of various elements (e.g. vertices). We associate a &lt;em&gt;size&lt;/em&gt; to each object by the number of elements it contains. One of a combinatorialists favourite activities is taking various notions of ‘object’ and ‘element’ and counting how many objects there are of each size. If an object-type \(\mathcal{A}\) has \(a_n\) objects of size \(n\), our job is to find the list of numbers \(a_n\), which as far as enumeration goes totally specifies the object.&lt;/p&gt;
+
+&lt;figure class=&quot;post-image&quot;&gt;
+  &lt;img src=&quot;/assets/images/trees.svg&quot; alt=&quot;
+
+    Enumerating rooted trees.
+&quot; style=&quot;max-width: 100%&quot; /&gt;
+  &lt;figcaption&gt;&lt;p style=&quot;font-size: .9rem; text-align:center&quot;&gt;Enumeration of rooted trees&lt;/p&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;These species of objects have a sort of arithmetic on them that suggests a powerful principle for calculations:&lt;/p&gt;
 
 &lt;h3 id=&quot;disjoint-union&quot;&gt;Disjoint union&lt;/h3&gt;
-&lt;p&gt;Consider a type \(\mathcal{C}\) that is the &lt;em&gt;disjoint union&lt;/em&gt; of \(\mathcal{A}\) and \(\mathcal{B}\): each \(\mathcal{C}\)-instance is either an \(\mathcal{A}\)-instance &lt;em&gt;or&lt;/em&gt; a \(\mathcal{B}\)-instance. In this case we have \(c_n=a_n+b_n\), so this corresponds to addition of lists.
-[example]&lt;/p&gt;
+
+&lt;p&gt;Consider a type \(\mathcal{C}\) that is the &lt;em&gt;disjoint union&lt;/em&gt; of \(\mathcal{A}\) and \(\mathcal{B}\): each \(\mathcal{C}\)-instance is either an \(\mathcal{A}\)-instance &lt;em&gt;or&lt;/em&gt; a \(\mathcal{B}\)-instance. In this case we have \(c_n=a_n+b_n\), so this corresponds to addition of lists.&lt;/p&gt;
+
 &lt;h3 id=&quot;cartesian-product&quot;&gt;Cartesian Product&lt;/h3&gt;
+
 &lt;p&gt;Consider a type \(\mathcal{C}\) where each object is a pair, consisting of an object from \(\mathcal{A}\) &lt;em&gt;and&lt;/em&gt; an object from \(\mathcal{B}\). In this case \(c_n\) should still count objects of &lt;em&gt;total&lt;/em&gt; size \(n\), which can be made by picking an \(\mathcal{A}\)-object of size \(k\) and a \(\mathcal{B}\) object of size \(n-k\) in all possible ways, for all \(k\). This leads to the requirement that&lt;/p&gt;
 
-&lt;p&gt;\(c_n = \sum_{k=0}^n a_{k}b_{n-k}\)
-[example]
-but this should look familiar: it’s the formula for multiplying coefficients of power series! So if we represent our list of numbers as a series&lt;/p&gt;
+\[c_n = \sum_{k=0}^n a_{k}b_{n-k}\]
+
+&lt;p&gt;but this should look familiar: it’s the formula for multiplying coefficients of power series! So if we represent our list of numbers as a series&lt;/p&gt;
 
 \[A(x) = a_0+a_1x+a_2x^2+\cdots\]
 
-&lt;p&gt;Then we find that the Cartesian product satisfies \(C(x)=A(x)B(x)\). This is the key concept that relates combinatorics to the behaviour of functions, and will be our centerpiece going forward. This is called the &lt;em&gt;ordinary generating function&lt;/em&gt; for the object-type we are analysing.&lt;/p&gt;
+&lt;p&gt;Then we find that the Cartesian product satisfies \(C(x)=A(x)B(x)\), and the disjoint union is \(A(x)+B(x)\). This is the key concept that relates combinatorics to the behaviour of functions, and will be our centerpiece going forward. This is called the &lt;em&gt;ordinary generating function&lt;/em&gt; for the object-type we are analysing.&lt;/p&gt;
 
-&lt;h3 id=&quot;a-digression-on-the-exponential&quot;&gt;A digression on the exponential.&lt;/h3&gt;
-&lt;p&gt;The above story can be continued for quite awhile (see Chapter 2 of [cite]), but isn’t quite the one we need. The problem is that the formula &lt;em&gt;we’re&lt;/em&gt; trying to understand has an exponential in it. It’s great that power series can represent counting problems, but the exponential function has a Taylor series \(e^{x}=\sum \frac{x^n}{n!}\), built of fractions. If we want this to be involved, the fractions need to be built in from the start:&lt;/p&gt;
+&lt;h3 id=&quot;a-digression-on-the-exponential&quot;&gt;A digression on the exponential&lt;/h3&gt;
 
-&lt;p&gt;The &lt;em&gt;exponential&lt;/em&gt; generating function of \(\mathcal{A}\)-objects is \(\sum \frac{a_nx^n}{n!}\)&lt;/p&gt;
+&lt;p&gt;The above story can be continued for quite awhile (see Chapter 2 of &lt;a class=&quot;citation&quot; href=&quot;#flajolet_analyticcomb&quot;&gt;[1]&lt;/a&gt;), but isn’t quite the one we need. The problem is that the formula &lt;em&gt;we’re&lt;/em&gt; trying to understand has an exponential in it! It’s great that integer power series can represent counting problems, but the exponential function isn’t one of them: it has a Taylor series \(e^{x}=\sum \frac{x^n}{n!}\) built out of fractions. If we want the exponential to be involved, the fractions need to be built in from the start:&lt;/p&gt;
+
+&lt;p&gt;The &lt;em&gt;exponential&lt;/em&gt; generating function of \(\mathcal{A}\)-objects is \(\sum \frac{a_n}{n!}x^n\), and these are more appropriate for our needs. But the discussion above needs to be updated slightly, which will also help clarify what this new kind of function naturally enumerates.&lt;/p&gt;
 
 &lt;h3 id=&quot;labelled-cartesian-product&quot;&gt;Labelled Cartesian Product&lt;/h3&gt;
 
-&lt;p&gt;Addition can still represent disjoint union here, but it’s no longer clear what multiplication means. If I multiply two exponential generating functions together, I get the different relationship&lt;/p&gt;
+&lt;p&gt;Addition can still represent disjoint union with this new definition, but it’s no longer clear what multiplication means. If I multiply two exponential generating functions together, I get the different relationship&lt;/p&gt;
 
 \[c_n=\sum_{k=0}^n {n\choose k}a_kb_{n-k}\]
 
-&lt;p&gt;that’s not that bad, actually! If \(c_n\) counts something it counts a choice of \(\mathcal{A}\)-object, a choice of \(\mathcal{B}\)-object, &lt;em&gt;and a further choice&lt;/em&gt; of \(k\) things out of \(n\). Well there are \(n\) elements, and \(k\) of them belong to the \(\mathcal{A}\)-object, so this suggests that the meaning of multiplication is including some extra element-data that has to be distributed among the pieces. In fact this is true: exponential generating functions naturally count &lt;em&gt;labelled&lt;/em&gt; objects: objects equipped with labellings of their elements from 1 to \(n\).&lt;/p&gt;
+&lt;p&gt;that’s not that bad, actually! Interpreting this new factor is no problem: if \(c_n\) counts something it counts a choice of \(\mathcal{A}\)-object, a choice of \(\mathcal{B}\)-object, &lt;em&gt;and a further choice&lt;/em&gt; of \(k\) things out of \(n\). Well there are \(n\) elements, and \(k\) of them belong to the \(\mathcal{A}\)-object, so this suggests that the meaning of multiplication involves tracking how some data attached to the \({\mathcal{A}}\)-elements sits inside the completed pair. In fact this is true: exponential generating functions naturally count &lt;em&gt;labelled&lt;/em&gt; objects: objects equipped with labellings of their elements from 1 to \(n\).&lt;/p&gt;
 
-&lt;p&gt;[example]&lt;/p&gt;
+&lt;figure class=&quot;post-image&quot;&gt;
+  &lt;img src=&quot;/assets/images/labelled_product.svg&quot; alt=&quot;
 
-&lt;p&gt;These are what we will use exclusively going forward.&lt;/p&gt;
+    Labelling a pair
+&quot; style=&quot;max-width: 100%&quot; /&gt;
+  &lt;figcaption&gt;&lt;p style=&quot;font-size: .9rem; text-align:center&quot;&gt;To label a pair of elements, we can label each piece and then specify how to interleave the labels of both pieces.&lt;/p&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;These are what we will use exclusively going forward, though we won’t too much attention to the labellings. Their main purpose is to change how the counting happens.&lt;/p&gt;
 
 &lt;h3 id=&quot;further-operations&quot;&gt;Further Operations&lt;/h3&gt;
 
-&lt;p&gt;n-Tuple: We call a single object of size \(n\), an \(n\)-tuple. It has generating function \(x^n/n!\): nth coefficient of 1 and zeros elsewhere. This corresponds to the arithmetic reasoning earlier, where an \(n\)-tuple of \(x\)’s is \(\underbrace{n\text{ times}}{x and x and x}\cdots\)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;n-Tuple&lt;/strong&gt;: An \(n\)-tuple of \(\mathcal{A}\)-objects has generating function \(\mathcal{A}^n/n!\). This corresponds to the arithmetic reasoning earlier, where an \(n\)-tuple of \(\mathcal{A}\)’s is \(\underbrace{\mathcal{A} \text{ and } \mathcal{A} \text{ and } \mathcal{A}\cdots}_{n\text{ times}}\).&lt;/p&gt;
 
-&lt;p&gt;SET: A set of elements is, as usual, just some (possibly empty) collection of elements. There is one of each size and it can only be labelled in one way, since all elements are identical. So the generating function of sets is \(\sum_{n=0}^\infty \frac{x^n}{n!} = e^{x}\). Equivalently, we have the decomposition&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Set&lt;/strong&gt;: A &lt;em&gt;set&lt;/em&gt; of \(\mathcal{A}\)-objects is just some (possibly empty) unordered collection of \(\mathcal{A}\)’s. Put another way, a set is a tuple that can be any size, as in&lt;/p&gt;
 
-&lt;p&gt;SET = ZERO OR ONE OR TWO OR ….&lt;/p&gt;
+\[\text{SET = 0-tuple OR 1-tuple OR 2-tuple OR ...}\]
 
-&lt;p&gt;&lt;em&gt;This is very important&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Leading to \(\sum_{n=0}^\infty \frac{\mathcal{A(x)}^n}{n!} = e^{\mathcal{A}(x)}\).&lt;/p&gt;
 
-&lt;p&gt;TREES
-(include??)&lt;/p&gt;
+&lt;p&gt;Despite its simplicity, this will be very important for us.&lt;/p&gt;
 
-&lt;h3 id=&quot;other-operations&quot;&gt;Other operations&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Pointing&lt;/strong&gt;: This one is a bit different. To &lt;em&gt;point&lt;/em&gt; an object is to designate one of its elements as special. If the object has size \(n\) there are \(n\) ways to pick the distinguished element, so the effect is to replace \(x^n\) with \(nx^n\). In other words, pointed \(\mathcal{A}\)-objects are represented by \(x\mathcal{A}&apos;(x)\): derivaties make an appearance.&lt;/p&gt;
 
-&lt;p&gt;Composition - keep it light, reference chp 3 for the rest. Introduce idea that all G(x) are formally 0-G OR 1-G OR 2-G… so F(G(x)) counts F-structures whose elements have been replaced by G-structures in all possible ways.&lt;/p&gt;
+&lt;h2 id=&quot;bringing-it-all-together&quot;&gt;Bringing it all Together&lt;/h2&gt;
 
-&lt;p&gt;Point-delete: Given an object type of size \(n\), we can delete an element in \(n\) possible ways to produce an object of size \(n-1\). This enacts the transformation on each term \(x^n\to nx^{n-1}\). But this just the derivative! By linearity this works for any generating function. So derivatives are how we select (and delete) elements.&lt;/p&gt;
+&lt;p&gt;Now that we’ve seen how simple operations on functions encode simple combinatorial operations, we can turn back to the original expression from last time and try to decode it.&lt;/p&gt;
 
-&lt;p&gt;Point-replace: to avoid deleting the element, we can place it back by multiplying by \(x\) again. We could also replace with some new element \(a\), if we wanted to keep track of which elements we’ve touched.&lt;/p&gt;
+\[\underbrace{\vphantom{\frac g4}\exp}_{\text{Set}}
+\underbrace{(\frac g{4!}\partial_J^4)}_{\substack{\text{replace 4 $J$s}\\\text{with a $g$}}}
+\underbrace{\vphantom{\frac g4}\exp}_\text{Set}
+\underbrace{\vphantom{\frac g4}(J^2/2m)}_{\substack{\text{$1/m$ and} \\ \text{Pair($J$)}}}\]
 
-&lt;p&gt;2-point-replace: Point out that the included new piece has to be ‘associated’ with the particular choice of removed pieces, which is distinct from removing pairs and adding a’s separately.&lt;/p&gt;
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
 
-&lt;h3 id=&quot;wicks-theorem&quot;&gt;Wick’s Theorem&lt;/h3&gt;
-&lt;p&gt;exp(x^2/2) is set(pairs).&lt;/p&gt;
-
-&lt;p&gt;###&lt;/p&gt;</content><author><name>Robert Mastragostino</name></author><category term="Feynman-diagrams" /><category term="Physics," /><category term="Combinatorics" /><summary type="html">Last time we got a taste of how Feynman diagrams let us calculate physical quantities. We boiled down a complex physics expression to its bare essentials, calculated the contribution of an example diagram, and got a hint about what links the two. Today we’ll explain the central correspondence driving the theory, so that by the end you should be able to derive the main relationship on your own:</summary></entry><entry><title type="html">Feynman Diagrams I: Introduction and Background</title><link href="/feynman-diagrams/2021/08/28/feynman-diagrams-1-introduction.html" rel="alternate" type="text/html" title="Feynman Diagrams I: Introduction and Background" /><published>2021-08-28T01:12:40-04:00</published><updated>2021-08-28T01:12:40-04:00</updated><id>/feynman-diagrams/2021/08/28/feynman-diagrams-1-introduction</id><content type="html" xml:base="/feynman-diagrams/2021/08/28/feynman-diagrams-1-introduction.html">&lt;p&gt;Feynman diagrams are a common calculation technique in quantum and statistical field theory. They help organize large calculations by relating the structure of a calculation to the structure of a simple diagram, letting us draw out the terms we need to calculate. While we still have to &lt;em&gt;do&lt;/em&gt; the calculation in the usual way, this makes it easier to keep track of all the pieces. The rules for describing Feynman diagrams are often presented as a bit mysterious, but they don’t have to be: the association of combinatorial structures to calculations has by now been fleshed out to a fairly general theory, to the point where it becomes trivial to read off the description of Feynman diagrams from the formula they describe.&lt;/p&gt;
+&lt;ol class=&quot;bibliography&quot;&gt;&lt;li&gt;&lt;span id=&quot;flajolet_analyticcomb&quot;&gt;[1]P. Flajolet and R. Sedgewick, “Analytic Combinatorics,” p. 761.&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;</content><author><name>Robert Mastragostino</name></author><category term="Feynman-diagrams" /><category term="Physics," /><category term="Combinatorics" /><summary type="html">Last time we got a taste of how Feynman diagrams let us calculate physical quantities. We boiled down a complex physics expression to its bare essentials, calculated the contribution of an example diagram, and got a hint about what links the two. Today we’ll explain the central correspondence driving the theory, so that we understand the meaning of all the ingredients in our expression:</summary></entry><entry><title type="html">Feynman Diagrams I: Introduction and Background</title><link href="/feynman-diagrams/2021/08/28/feynman-diagrams-1-introduction.html" rel="alternate" type="text/html" title="Feynman Diagrams I: Introduction and Background" /><published>2021-08-28T01:12:40-04:00</published><updated>2021-08-28T01:12:40-04:00</updated><id>/feynman-diagrams/2021/08/28/feynman-diagrams-1-introduction</id><content type="html" xml:base="/feynman-diagrams/2021/08/28/feynman-diagrams-1-introduction.html">&lt;p&gt;Feynman diagrams are a common calculation technique in quantum and statistical field theory. They help organize large calculations by relating the structure of a calculation to the structure of a simple diagram, letting us draw out the terms we need to calculate. While we still have to &lt;em&gt;do&lt;/em&gt; the calculation in the usual way, this makes it easier to keep track of all the pieces. The rules for describing Feynman diagrams are often presented as a bit mysterious, but they don’t have to be: the association of combinatorial structures to calculations has by now been fleshed out to a fairly general theory, to the point where it becomes trivial to read off the description of Feynman diagrams from the formula they describe.&lt;/p&gt;
 
 &lt;p&gt;In the following articles we’ll be following what’s known as \(\phi^4\)-theory, where the relationship between the rules and calculations is&lt;/p&gt;
 
@@ -89,11 +105,11 @@ but this should look familiar: it’s the formula for multiplying coefficients o
 
 &lt;p&gt;While this is a little bit abstract, many directly measurable quantities you might want to calculate are only a short step away from the partition function itself. So if you can do this one calculation then you’ve basically “solved” the theory! Unfortunately there’s no free lunch here, and doing this calculation is in general quite difficult. Luckily it &lt;em&gt;is&lt;/em&gt; doable when \(g=0\) and the quartic contribution disappears, which corresponds to a theory of non-interacting particles. This insight leads us to do perturbation theory in \(g\), which is where the organization by Feynman diagrams is helpful.&lt;/p&gt;
 
-&lt;p&gt;Before getting into the diagrams themselves, let’s remove some clutter. First, the integral over spacetime on the inside of the exponential can go: the values of the field at different times are only linked in a “simple” way, through the first term (the Laplacian) and the core structure of Feynman diagrams is actually largely maintained if we focus on one isolated point. So instead of being a particle state or a field configuration, we’ll drop the Laplacian term and just take \(\phi\) to be a number. Second, this dramatically simplifies the path-integral surrounding the whole thing: integrating over \(\phi\) is just an ordinary integral. So the main calculation we’ll be investigating for awhile is just&lt;/p&gt;
+&lt;p&gt;Before getting into the diagrams themselves, let’s remove some clutter. First, the integral over spacetime on the inside of the exponential can go: the values of the field at different points are only linked in a “simple” way, through the first term (the Laplacian) and the core structure of Feynman diagrams is actually largely maintained if we focus on one isolated point. So instead of being a particle state or a field configuration, we’ll drop the Laplacian term and just take \(\phi\) to be a number. Second, this dramatically simplifies the path-integral surrounding the whole thing: integrating over \(\phi\) is just an ordinary integral. So the main calculation we’ll be investigating for awhile is just&lt;/p&gt;
 
 \[Z[J]=\int e^{-(\frac 12m\phi^2+\frac{g}{4!}\phi^4-J\phi)} d\phi.\]
 
-&lt;p&gt;Much nicer.&lt;/p&gt;
+&lt;p&gt;Much nicer. Diagrams aren’t practically helpful here since just taking the derivatives is so simple, but this is a good place to start.&lt;/p&gt;
 
 &lt;h2 id=&quot;the-feynman-trick&quot;&gt;The Feynman Trick&lt;/h2&gt;
 
@@ -105,11 +121,11 @@ but this should look familiar: it’s the formula for multiplying coefficients o
 
 \[Z[J]=\frac 1{\sqrt{2\pi m}}e^{\frac{g}{4!}\frac {d^4}{dJ^4}}e^{J^2/2m}\]
 
-&lt;p&gt;Going forward we will drop the \(m\)-prefactor, since for our purposes it’s just a constant that isn’t really relevant to the diagrams. At this point we’ve brought the partition function down into the form we saw at the beginning.&lt;/p&gt;
+&lt;p&gt;Going forward we will drop the \(1/\sqrt{2\pi m}\)-prefactor, since for our purposes it’s just a constant that isn’t really relevant to the diagrams. At this point we’ve brought the partition function down into the form we saw at the beginning. While integrals don’t really have a combinatorial description, derivatives &lt;em&gt;do&lt;/em&gt;, as we’ll see, so this move gives us a good setup to bring diagrams into the picture.&lt;/p&gt;
 
 &lt;h2 id=&quot;calculating-with-diagrams&quot;&gt;Calculating with Diagrams&lt;/h2&gt;
 
-&lt;p&gt;Now that the partition function has been nicely reduced, we’ll talk a bit about how Feynman diagrams actually work. To perform a calculation with Feynman diagrams:&lt;/p&gt;
+&lt;p&gt;Now that the partition function has been nicely reduced, we’ll detour to talk a bit about how Feynman diagrams actually work once we have them. To perform a calculation with Feynman diagrams:&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;Draw all possible networks with a given number of vertices, whose structure depends on the theory. In the case of \(\phi^4\) theory, each vertex that isn’t a dangling leaf has four vertices.&lt;/li&gt;
