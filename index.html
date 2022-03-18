@@ -7,19 +7,31 @@
     <link rel="stylesheet" href="/assets/css/main.css">
 <link rel="alternate" type="application/atom+xml" title="Disordered Thoughts" href="/feed.xml">
 <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
-<link rel="shortcut icon" href="assets/images/logoicon.ico">
+<link rel="shortcut icon" href="/assets/images/logoicon.ico">
 	<!-- MathJax -->
+<script>
+MathJax = {
+	tex: {
+		inlineMath: [['$','$'],['\\(','\\)']]
+	},
+	svg: {
+		fontCache: 'global'
+	}
+};
+</script>
+
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
+    extensions: ["te2jax.js"],
     TeX: {
       equationNumbers: {
         autoNumber: "AMS"
       }
     },
     tex2jax: {
-    inlineMath: [ ['\\(', '\\)'] ],
-    displayMath: [ ['\\[', '\\]'] ],
-    processEscapes: true,
+    inlineMath: [ ['$','$'], ['\\(', '\\)'] ],
+    displayMath: [['$$','$$'], ['\\[', '\\]'] ],
+    processEscapes: true
   }
 });
 MathJax.Hub.Register.MessageHook("Math Processing Error",function (message) {

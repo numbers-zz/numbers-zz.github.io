@@ -7,19 +7,31 @@
     <link rel="stylesheet" href="/assets/css/main.css">
 <link rel="alternate" type="application/atom+xml" title="Disordered Thoughts" href="/feed.xml">
 <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
-<link rel="shortcut icon" href="assets/images/logoicon.ico">
+<link rel="shortcut icon" href="/assets/images/logoicon.ico">
 	<!-- MathJax -->
+<script>
+MathJax = {
+	tex: {
+		inlineMath: [['$','$'],['\\(','\\)']]
+	},
+	svg: {
+		fontCache: 'global'
+	}
+};
+</script>
+
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
+    extensions: ["te2jax.js"],
     TeX: {
       equationNumbers: {
         autoNumber: "AMS"
       }
     },
     tex2jax: {
-    inlineMath: [ ['\\(', '\\)'] ],
-    displayMath: [ ['\\[', '\\]'] ],
-    processEscapes: true,
+    inlineMath: [ ['$','$'], ['\\(', '\\)'] ],
+    displayMath: [['$$','$$'], ['\\[', '\\]'] ],
+    processEscapes: true
   }
 });
 MathJax.Hub.Register.MessageHook("Math Processing Error",function (message) {
@@ -79,15 +91,15 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
   <figcaption><p style="font-size: .9rem; text-align:center">Enumeration of rooted trees</p></figcaption>
 </figure>
 
-<p>These species of objects have a sort of arithmetic on them that suggests a powerful principle for calculations:</p>
+<p>These species of objects have a sort of arithmetic on them, inherited from sets, that suggests a powerful principle for calculations:</p>
 
 <h3 id="disjoint-union">Disjoint union</h3>
 
-<p>Consider a type \(\mathcal{C}\) that is the <em>disjoint union</em> of \(\mathcal{A}\) and \(\mathcal{B}\): each \(\mathcal{C}\)-instance is either an \(\mathcal{A}\)-instance <em>or</em> a \(\mathcal{B}\)-instance. In this case we have \(c_n=a_n+b_n\), so this corresponds to addition of lists.</p>
+<p>Consider a type \(\mathcal{C}\) that is the <em>disjoint union</em> of \(\mathcal{A}\) and \(\mathcal{B}\): each \(\mathcal{C}\)-instance is either an \(\mathcal{A}\)-instance <em>or</em> a \(\mathcal{B}\)-instance. In this case we have \(c_n=a_n+b_n\), so this corresponds to addition of lists. We will think of this as a logical “OR”.</p>
 
 <h3 id="cartesian-product">Cartesian Product</h3>
 
-<p>Consider a type \(\mathcal{C}\) where each object is a pair, consisting of an object from \(\mathcal{A}\) <em>and</em> an object from \(\mathcal{B}\). In this case \(c_n\) should still count objects of <em>total</em> size \(n\), which can be made by picking an \(\mathcal{A}\)-object of size \(k\) and a \(\mathcal{B}\) object of size \(n-k\) in all possible ways, for all \(k\). This leads to the requirement that</p>
+<p>Consider a type \(\mathcal{C}\) where each object is an <em>ordered pair</em>, consisting of an object from \(\mathcal{A}\) AND an object from \(\mathcal{B}\). In this case \(c_n\) should still count objects of <em>total</em> size \(n\), which can be made by picking an \(\mathcal{A}\)-object of size \(k\) and a \(\mathcal{B}\) object of size \(n-k\) in all possible ways, for all \(k\). This leads to the requirement that</p>
 
 \[c_n = \sum_{k=0}^n a_{k}b_{n-k}\]
 
@@ -95,45 +107,71 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
 
 \[A(x) = a_0+a_1x+a_2x^2+\cdots\]
 
-<p>Then we find that the Cartesian product satisfies \(C(x)=A(x)B(x)\), and the disjoint union is \(A(x)+B(x)\). This is the key concept that relates combinatorics to the behaviour of functions, and will be our centerpiece going forward. This is called the <em>ordinary generating function</em> for the object-type we are analysing.</p>
+<p>Then we find that the Cartesian product satisfies \(C(x)=A(x)B(x)\), and the disjoint union is \(A(x)+B(x)\). This is the key concept that relates combinatorics to the behaviour of functions, and will be our centerpiece going forward: the <em>ordinary generating function</em> of the object-type we are analysing. For someone working in combinatorics, the family of objects is primary and the series is a tool for analyzing it. For a physicist the <em>series</em> is what’s important, and the family of objects gives us an intuitive lens for understanding its structure.</p>
+
+<div class="exercise"><b>Exercise:</b> What is the interpretation of $A(B+C)=AB+AC$?</div>
 
 <h3 id="a-digression-on-the-exponential">A digression on the exponential</h3>
 
-<p>The above story can be continued for quite awhile (see Chapter 2 of <a class="citation" href="#flajolet_analyticcomb">[1]</a>), but isn’t quite the one we need. The problem is that the formula <em>we’re</em> trying to understand has an exponential in it! It’s great that integer power series can represent counting problems, but the exponential function isn’t one of them: it has a Taylor series \(e^{x}=\sum \frac{x^n}{n!}\) built out of fractions. If we want the exponential to be involved, the fractions need to be built in from the start:</p>
+<p>The above story can be continued for quite awhile (see Chapter 2 of <a class="citation" href="#flajolet_analyticcomb">[1]</a>), but isn’t quite the one we need. The problem is that the formula <em>we’re</em> trying to understand has an exponential in it! It’s great that integer power series can represent counting problems, but the exponential function isn’t one of them: it has a Taylor series \(e^{x}=\sum \frac{x^n}{n!}\) built out of fractions. If we want the exponential to show up, the fractions need to be built in from the start:</p>
 
-<p>The <em>exponential</em> generating function of \(\mathcal{A}\)-objects is \(\sum \frac{a_n}{n!}x^n\), and these are more appropriate for our needs. But the discussion above needs to be updated slightly, which will also help clarify what this new kind of function naturally enumerates.</p>
+<p>The <em>exponential</em> generating function of \(\mathcal{A}\)-objects is \(\sum \frac{a_n}{n!}x^n\), and these are more appropriate for our needs. With this change in definition the discussion above needs to be updated slightly, which will also help clarify what this new kind of function naturally enumerates.</p>
 
 <h3 id="labelled-cartesian-product">Labelled Cartesian Product</h3>
 
-<p>Addition can still represent disjoint union with this new definition, but it’s no longer clear what multiplication means. If I multiply two exponential generating functions together, I get the different relationship</p>
+<p>Addition can still represent disjoint union with this new definition, but it’s no longer clear what multiplication means. If we multiply two exponential generating functions together, \(\sum \frac{c_n}{n!}x^n =\left(\sum \frac{a_n}{n!}x^n\right)\left(\sum \frac{b_n}{n!}x^n\right)\) we get the different relationship</p>
 
 \[c_n=\sum_{k=0}^n {n\choose k}a_kb_{n-k}\]
 
-<p>that’s not that bad, actually! Interpreting this new factor is no problem: if \(c_n\) counts something it counts a choice of \(\mathcal{A}\)-object, a choice of \(\mathcal{B}\)-object, <em>and a further choice</em> of \(k\) things out of \(n\). Well there are \(n\) elements, and \(k\) of them belong to the \(\mathcal{A}\)-object, so this suggests that the meaning of multiplication involves tracking how some data attached to the \({\mathcal{A}}\)-elements sits inside the completed pair. In fact this is true: exponential generating functions naturally count <em>labelled</em> objects: objects equipped with labellings of their elements from 1 to \(n\).</p>
+<p>…which isn’t that bad, actually! Interpreting this new factor is no problem: if \(c_n\) counts something it counts a choice of \(k\)-sized \(\mathcal{A}\)-object, a choice of \((n-k)\)-sized  \(\mathcal{B}\)-object, <em>and a further choice</em> of \(k\) things out of \(n\). Well there are \(n\) elements, and \(k\) of them belong to the \(\mathcal{A}\)-object, so this suggests that the new term is tracking how some data attached to the \({\mathcal{A}}\)-elements sits inside the completed pair. In fact this is true: exponential generating functions naturally count <em>labelled</em> objects: objects equipped with labellings of their elements from 1 to \(n\).</p>
 
 <figure class="post-image">
   <img src="/assets/images/labelled_product.svg" alt="
 
     Labelling a pair
 " style="max-width: 100%" />
-  <figcaption><p style="font-size: .9rem; text-align:center">To label a pair of elements, we can label each piece and then specify how to interleave the labels of both pieces.</p></figcaption>
+  <figcaption><p style="font-size: .9rem; text-align:center">To pair of labels into a labelled pair, we can label each piece and then specify how to interleave the labels of both pieces, assigning them in increasing order.</p></figcaption>
 </figure>
 
-<p>These are what we will use exclusively going forward, though we won’t too much attention to the labellings. Their main purpose is to change how the counting happens.</p>
+<p>These are what we will use exclusively going forward.</p>
+
+<div class="exercise"><b>Exercise:</b> What is the interpretation of $e^{A+B}=e^Ae^B$?</div>
 
 <h3 id="further-operations">Further Operations</h3>
 
-<p><strong>n-Tuple</strong>: An \(n\)-tuple of \(\mathcal{A}\)-objects has generating function \(\mathcal{A}^n/n!\). This corresponds to the arithmetic reasoning earlier, where an \(n\)-tuple of \(\mathcal{A}\)’s is \(\underbrace{\mathcal{A} \text{ and } \mathcal{A} \text{ and } \mathcal{A}\cdots}_{n\text{ times}}\).</p>
+<p><strong>n-Set</strong>: An \(n\)-Set (unordered tuple) of \(\mathcal{A}\)-objects has generating function \(\mathcal{A}^n/n!\). This corresponds to the arithmetic reasoning earlier, where an \(n\)-set of \(\mathcal{A}\)’s is \(\underbrace{\mathcal{A} \text{ and } \mathcal{A} \text{ and } \mathcal{A}\cdots}_{n\text{ times}}\). The division by \(n!\) is because the \(A\)-objects chosen are unordered, while the product alone produces an ordered series.</p>
 
-<p><strong>Set</strong>: A <em>set</em> of \(\mathcal{A}\)-objects is just some (possibly empty) unordered collection of \(\mathcal{A}\)’s. Put another way, a set is a tuple that can be any size, as in</p>
+<p><strong>Set</strong>: A <em>set</em> of \(\mathcal{A}\)-objects is just some (possibly empty) unordered collection of \(\mathcal{A}\)’s. Put another way, a set is an $n$-set that can be any size, as in</p>
 
-\[\text{SET = 0-tuple OR 1-tuple OR 2-tuple OR ...}\]
+\[\text{SET = 0-set OR 1-set OR 2-set OR ...}\]
 
-<p>Leading to \(\sum_{n=0}^\infty \frac{\mathcal{A(x)}^n}{n!} = e^{\mathcal{A}(x)}\).</p>
+<p>leading to \(\sum_{n=0}^\infty \frac{\mathcal{A(x)}^n}{n!} = e^{\mathcal{A}(x)}\).</p>
 
 <p>Despite its simplicity, this will be very important for us.</p>
 
-<p><strong>Pointing</strong>: This one is a bit different. To <em>point</em> an object is to designate one of its elements as special. If the object has size \(n\) there are \(n\) ways to pick the distinguished element, so the effect is to replace \(x^n\) with \(nx^n\). In other words, pointed \(\mathcal{A}\)-objects are represented by \(x\mathcal{A}'(x)\): derivaties make an appearance.</p>
+<p><strong>Point-Deletion</strong>: This one is a bit different. To <em>point-delete</em> an object is to designate one of its elements as having ‘disappeared’, replaced by a hole. If the object has size \(n\) there are \(n\) ways to pick the removed element, so the effect is to replace \(x^n\) with \(nx^{n-1}\). In other words, pointed \(\mathcal{A}\)-objects are represented by \(\mathcal{A}'(x)\): derivatives make an appearance!</p>
+
+<figure class="post-image">
+  <img src="/assets/images/derivative_action.svg" alt="
+
+    Action of the derivative
+" style="max-width: 100%" />
+  <figcaption><p style="font-size: .9rem; text-align:center">The derivative acts to remove an element in all possible ways. Note that we still remember how the element sat inside the diagram.</p></figcaption>
+</figure>
+
+<div class="exercise"><b>Exercise:</b> What is the interpretation of \(e^{A+B}=e^{A}e^{B}\)?
+
+<b>Exercise:</b> What is the interpretation of the product rule \((AB)'=A'B+AB'\)?</div>
+
+<h2 id="removing-the-labels">Removing the labels</h2>
+
+<p>So far, we are counting <em>labelled</em> constructions, where a labelled \(\mathcal{A}\)-object is specified by giving both a “shape” and a way of assigning distinct numbers to each of its elements. But the particular assignment of labels doesn’t affect how much the shape contributes to the generating function. The whole effect of labels is just affecting how many times a given shape is counted. So how many is that?</p>
+
+<p>Labelling an \(n\)-element set with numbers \(1\) through \(n\) is the same thing as ordering the set. There are \(n!\) orderings of a set, so we might expect there to be this many labellings. This is only close. The problem is that the object may have symmetries, making two ‘different’ labellings represent the same structure. For example, a single line segment $\cdot\hspace{-4pt}-\hspace{-4pt}\cdot$ only has one labelling because it is symmetric around its center. If the diagram has a symmetry group $G$, there are only $n!/|G|$ distinct labellings.</p>
+
+<div class="exercise"><b>Exercise:</b> An $n$-set is specified by $x^n/n!$. How many different ways can an n-set be labelled? How does this explain the coefficient?</div>
+
+<p>So to count <em>labelled</em> objects of size $n$, we come up with all possible unlabelled objects of size $n$, and for each object add a factor of $1/n!$ for every distinct way of labelling them. There are $n!/|G|$ such ways, so the overall factor each shape contributes from all its labellings is $1/|G|$. If we remember this we can do away with all the labelling, which is what we’ll start doing from now on.</p>
 
 <h2 id="bringing-it-all-together">Bringing it all Together</h2>
 
@@ -144,9 +182,39 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
 \underbrace{\vphantom{\frac g4}\exp}_\text{Set}
 \underbrace{\vphantom{\frac g4}(J^2/2m)}_{\substack{\text{$1/m$ and} \\ \text{Pair($J$)}}}\]
 
+<p>Going from right to left (inside to outside), we start with \(J^2/2\): pairs of \(J\)s. We multiply these (AND) by \(1/m\). A natural way to represent this is to draw an edge between the \(J\)’s to represent the pairing, and then label that edge with a \(1/m\) factor.</p>
+
+<figure class="post-image">
+  <img src="/assets/images/feynman_intro_singleedge.svg" alt="
+
+    Action of the derivative
+" style="max-width: 100%" />
+  <figcaption><p style="font-size: .9rem; text-align:center">A pair of $J$'s and a $1/m$. Since these are grouped in the expression, it is convenient to represent them by a connected graph.</p></figcaption>
+</figure>
+
+<p>Afterwards we simply take take \(\text{Set}\)s of these. In the physics literature, the fact that \(\exp(x^2/2)\) counts pairings over the set of labels is called <em>Wick’s Theorem</em>.</p>
+
+<p>The next part is where most of the work happens. \(g\frac 1{4!}\partial_J^4\) is \(g \text{ AND } \text{4-set}(J\text{-removals})\). So to act with this operator we remove four \(J\)’s, and include a factor of \(g\) for each time we do this. There is a subtlety here: applying this operator twice is not the same thing as just removing eight elements, since that would forget which elements belong to the same quadruple. We’ll need to remember this information by bunching the holes together in fours, along with their factors of \(g\). One clear way to do this is to just bring the new holes together at a vertex.</p>
+
+<figure class="post-image">
+  <img src="/assets/images/feynman_intro_example.svg" alt="
+
+    Replacing four J's with an interaction vertex.
+" style="max-width: 100%" />
+  <figcaption><p style="font-size: .9rem; text-align:center">Replacing four \(J\)'s with an interaction vertex.</p></figcaption>
+</figure>
+
+<p>And again we just take \(\text{Set}\)s of these operations: applying them in all possible ways, any number of times. But this is exactly how to produce the Feynman diagrams of the theory! The $J$-fusion is what physicists would call the “Feynman rules” of the theory. By generating all possible graph-shapes and weighting them according to their symmetries, we’ll construct the terms of the generating function piece by piece.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>By understanding the meaning of each “piece” of a mathematical expression, we see that it essentially spells out a <em>sentence</em> describing how to build a kind of combinatorial object. We can, without any act of genius, then <em>deduce</em> that the objects being counted by partition functions are Feynman diagrams, and the sentence gives an algorithm for building them!</p>
+
+<p>Right now our diagrams are both simple (only one variable!) and redundant (many diagrams with similar pieces are counted separately.</p>
+
 <h2 id="references">References</h2>
 
-<ol class="bibliography"><li><span id="flajolet_analyticcomb">[1]P. Flajolet and R. Sedgewick, “Analytic Combinatorics,” p. 761.</span></li></ol>
+<ol class="bibliography"><li><span id="flajolet_analyticcomb">[1]P. Flajolet and R. Sedgewick, <i>Analytic Combinatorics</i>. Cambridge University Press, 2009.</span></li></ol>
 
 	</div>
 	<hr class="hrule-80"/>

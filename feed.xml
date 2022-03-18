@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-10T12:58:27-05:00</updated><id>/feed.xml</id><title type="html">Disordered Thoughts</title><author><name>Robert Mastragostino</name></author><entry><title type="html">Feynman Diagrams II: Generating Functions</title><link href="/feynman-diagrams/2021/08/29/feynman-diagrams-2-generating-functions.html" rel="alternate" type="text/html" title="Feynman Diagrams II: Generating Functions" /><published>2021-08-29T01:12:40-04:00</published><updated>2021-08-29T01:12:40-04:00</updated><id>/feynman-diagrams/2021/08/29/feynman-diagrams-2-generating-functions</id><content type="html" xml:base="/feynman-diagrams/2021/08/29/feynman-diagrams-2-generating-functions.html">&lt;p&gt;&lt;a href=&quot;/feynman-diagrams/2021/08/28/feynman-diagrams-1-introduction.html&quot;&gt;Last time&lt;/a&gt; we got a taste of how Feynman diagrams let us calculate physical quantities. We boiled down a complex physics expression to its bare essentials, calculated the contribution of an example diagram, and got a hint about what links the two. Today we’ll explain the central correspondence driving the theory, so that we understand the meaning of all the ingredients in our expression:&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-03-18T19:23:40-04:00</updated><id>/feed.xml</id><title type="html">Disordered Thoughts</title><author><name>Robert Mastragostino</name></author><entry><title type="html">Feynman Diagrams II: Generating Functions</title><link href="/feynman-diagrams/2021/08/29/feynman-diagrams-2-generating-functions.html" rel="alternate" type="text/html" title="Feynman Diagrams II: Generating Functions" /><published>2021-08-29T01:12:40-04:00</published><updated>2021-08-29T01:12:40-04:00</updated><id>/feynman-diagrams/2021/08/29/feynman-diagrams-2-generating-functions</id><content type="html" xml:base="/feynman-diagrams/2021/08/29/feynman-diagrams-2-generating-functions.html">&lt;p&gt;&lt;a href=&quot;/feynman-diagrams/2021/08/28/feynman-diagrams-1-introduction.html&quot;&gt;Last time&lt;/a&gt; we got a taste of how Feynman diagrams let us calculate physical quantities. We boiled down a complex physics expression to its bare essentials, calculated the contribution of an example diagram, and got a hint about what links the two. Today we’ll explain the central correspondence driving the theory, so that we understand the meaning of all the ingredients in our expression:&lt;/p&gt;
 
 \[\underbrace{\vphantom{\frac g4}\exp}_{\text{Set}}
 \underbrace{(\frac g{4!}\partial_J^4)}_{\substack{\text{replace 4 $J$s}\\\text{with a $g$}}}
@@ -17,15 +17,15 @@
   &lt;figcaption&gt;&lt;p style=&quot;font-size: .9rem; text-align:center&quot;&gt;Enumeration of rooted trees&lt;/p&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
-&lt;p&gt;These species of objects have a sort of arithmetic on them that suggests a powerful principle for calculations:&lt;/p&gt;
+&lt;p&gt;These species of objects have a sort of arithmetic on them, inherited from sets, that suggests a powerful principle for calculations:&lt;/p&gt;
 
 &lt;h3 id=&quot;disjoint-union&quot;&gt;Disjoint union&lt;/h3&gt;
 
-&lt;p&gt;Consider a type \(\mathcal{C}\) that is the &lt;em&gt;disjoint union&lt;/em&gt; of \(\mathcal{A}\) and \(\mathcal{B}\): each \(\mathcal{C}\)-instance is either an \(\mathcal{A}\)-instance &lt;em&gt;or&lt;/em&gt; a \(\mathcal{B}\)-instance. In this case we have \(c_n=a_n+b_n\), so this corresponds to addition of lists.&lt;/p&gt;
+&lt;p&gt;Consider a type \(\mathcal{C}\) that is the &lt;em&gt;disjoint union&lt;/em&gt; of \(\mathcal{A}\) and \(\mathcal{B}\): each \(\mathcal{C}\)-instance is either an \(\mathcal{A}\)-instance &lt;em&gt;or&lt;/em&gt; a \(\mathcal{B}\)-instance. In this case we have \(c_n=a_n+b_n\), so this corresponds to addition of lists. We will think of this as a logical “OR”.&lt;/p&gt;
 
 &lt;h3 id=&quot;cartesian-product&quot;&gt;Cartesian Product&lt;/h3&gt;
 
-&lt;p&gt;Consider a type \(\mathcal{C}\) where each object is a pair, consisting of an object from \(\mathcal{A}\) &lt;em&gt;and&lt;/em&gt; an object from \(\mathcal{B}\). In this case \(c_n\) should still count objects of &lt;em&gt;total&lt;/em&gt; size \(n\), which can be made by picking an \(\mathcal{A}\)-object of size \(k\) and a \(\mathcal{B}\) object of size \(n-k\) in all possible ways, for all \(k\). This leads to the requirement that&lt;/p&gt;
+&lt;p&gt;Consider a type \(\mathcal{C}\) where each object is an &lt;em&gt;ordered pair&lt;/em&gt;, consisting of an object from \(\mathcal{A}\) AND an object from \(\mathcal{B}\). In this case \(c_n\) should still count objects of &lt;em&gt;total&lt;/em&gt; size \(n\), which can be made by picking an \(\mathcal{A}\)-object of size \(k\) and a \(\mathcal{B}\) object of size \(n-k\) in all possible ways, for all \(k\). This leads to the requirement that&lt;/p&gt;
 
 \[c_n = \sum_{k=0}^n a_{k}b_{n-k}\]
 
@@ -33,45 +33,71 @@
 
 \[A(x) = a_0+a_1x+a_2x^2+\cdots\]
 
-&lt;p&gt;Then we find that the Cartesian product satisfies \(C(x)=A(x)B(x)\), and the disjoint union is \(A(x)+B(x)\). This is the key concept that relates combinatorics to the behaviour of functions, and will be our centerpiece going forward. This is called the &lt;em&gt;ordinary generating function&lt;/em&gt; for the object-type we are analysing.&lt;/p&gt;
+&lt;p&gt;Then we find that the Cartesian product satisfies \(C(x)=A(x)B(x)\), and the disjoint union is \(A(x)+B(x)\). This is the key concept that relates combinatorics to the behaviour of functions, and will be our centerpiece going forward: the &lt;em&gt;ordinary generating function&lt;/em&gt; of the object-type we are analysing. For someone working in combinatorics, the family of objects is primary and the series is a tool for analyzing it. For a physicist the &lt;em&gt;series&lt;/em&gt; is what’s important, and the family of objects gives us an intuitive lens for understanding its structure.&lt;/p&gt;
+
+&lt;div class=&quot;exercise&quot;&gt;&lt;b&gt;Exercise:&lt;/b&gt; What is the interpretation of $A(B+C)=AB+AC$?&lt;/div&gt;
 
 &lt;h3 id=&quot;a-digression-on-the-exponential&quot;&gt;A digression on the exponential&lt;/h3&gt;
 
-&lt;p&gt;The above story can be continued for quite awhile (see Chapter 2 of &lt;a class=&quot;citation&quot; href=&quot;#flajolet_analyticcomb&quot;&gt;[1]&lt;/a&gt;), but isn’t quite the one we need. The problem is that the formula &lt;em&gt;we’re&lt;/em&gt; trying to understand has an exponential in it! It’s great that integer power series can represent counting problems, but the exponential function isn’t one of them: it has a Taylor series \(e^{x}=\sum \frac{x^n}{n!}\) built out of fractions. If we want the exponential to be involved, the fractions need to be built in from the start:&lt;/p&gt;
+&lt;p&gt;The above story can be continued for quite awhile (see Chapter 2 of &lt;a class=&quot;citation&quot; href=&quot;#flajolet_analyticcomb&quot;&gt;[1]&lt;/a&gt;), but isn’t quite the one we need. The problem is that the formula &lt;em&gt;we’re&lt;/em&gt; trying to understand has an exponential in it! It’s great that integer power series can represent counting problems, but the exponential function isn’t one of them: it has a Taylor series \(e^{x}=\sum \frac{x^n}{n!}\) built out of fractions. If we want the exponential to show up, the fractions need to be built in from the start:&lt;/p&gt;
 
-&lt;p&gt;The &lt;em&gt;exponential&lt;/em&gt; generating function of \(\mathcal{A}\)-objects is \(\sum \frac{a_n}{n!}x^n\), and these are more appropriate for our needs. But the discussion above needs to be updated slightly, which will also help clarify what this new kind of function naturally enumerates.&lt;/p&gt;
+&lt;p&gt;The &lt;em&gt;exponential&lt;/em&gt; generating function of \(\mathcal{A}\)-objects is \(\sum \frac{a_n}{n!}x^n\), and these are more appropriate for our needs. With this change in definition the discussion above needs to be updated slightly, which will also help clarify what this new kind of function naturally enumerates.&lt;/p&gt;
 
 &lt;h3 id=&quot;labelled-cartesian-product&quot;&gt;Labelled Cartesian Product&lt;/h3&gt;
 
-&lt;p&gt;Addition can still represent disjoint union with this new definition, but it’s no longer clear what multiplication means. If I multiply two exponential generating functions together, I get the different relationship&lt;/p&gt;
+&lt;p&gt;Addition can still represent disjoint union with this new definition, but it’s no longer clear what multiplication means. If we multiply two exponential generating functions together, \(\sum \frac{c_n}{n!}x^n =\left(\sum \frac{a_n}{n!}x^n\right)\left(\sum \frac{b_n}{n!}x^n\right)\) we get the different relationship&lt;/p&gt;
 
 \[c_n=\sum_{k=0}^n {n\choose k}a_kb_{n-k}\]
 
-&lt;p&gt;that’s not that bad, actually! Interpreting this new factor is no problem: if \(c_n\) counts something it counts a choice of \(\mathcal{A}\)-object, a choice of \(\mathcal{B}\)-object, &lt;em&gt;and a further choice&lt;/em&gt; of \(k\) things out of \(n\). Well there are \(n\) elements, and \(k\) of them belong to the \(\mathcal{A}\)-object, so this suggests that the meaning of multiplication involves tracking how some data attached to the \({\mathcal{A}}\)-elements sits inside the completed pair. In fact this is true: exponential generating functions naturally count &lt;em&gt;labelled&lt;/em&gt; objects: objects equipped with labellings of their elements from 1 to \(n\).&lt;/p&gt;
+&lt;p&gt;…which isn’t that bad, actually! Interpreting this new factor is no problem: if \(c_n\) counts something it counts a choice of \(k\)-sized \(\mathcal{A}\)-object, a choice of \((n-k)\)-sized  \(\mathcal{B}\)-object, &lt;em&gt;and a further choice&lt;/em&gt; of \(k\) things out of \(n\). Well there are \(n\) elements, and \(k\) of them belong to the \(\mathcal{A}\)-object, so this suggests that the new term is tracking how some data attached to the \({\mathcal{A}}\)-elements sits inside the completed pair. In fact this is true: exponential generating functions naturally count &lt;em&gt;labelled&lt;/em&gt; objects: objects equipped with labellings of their elements from 1 to \(n\).&lt;/p&gt;
 
 &lt;figure class=&quot;post-image&quot;&gt;
   &lt;img src=&quot;/assets/images/labelled_product.svg&quot; alt=&quot;
 
     Labelling a pair
 &quot; style=&quot;max-width: 100%&quot; /&gt;
-  &lt;figcaption&gt;&lt;p style=&quot;font-size: .9rem; text-align:center&quot;&gt;To label a pair of elements, we can label each piece and then specify how to interleave the labels of both pieces.&lt;/p&gt;&lt;/figcaption&gt;
+  &lt;figcaption&gt;&lt;p style=&quot;font-size: .9rem; text-align:center&quot;&gt;To pair of labels into a labelled pair, we can label each piece and then specify how to interleave the labels of both pieces, assigning them in increasing order.&lt;/p&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
-&lt;p&gt;These are what we will use exclusively going forward, though we won’t too much attention to the labellings. Their main purpose is to change how the counting happens.&lt;/p&gt;
+&lt;p&gt;These are what we will use exclusively going forward.&lt;/p&gt;
+
+&lt;div class=&quot;exercise&quot;&gt;&lt;b&gt;Exercise:&lt;/b&gt; What is the interpretation of $e^{A+B}=e^Ae^B$?&lt;/div&gt;
 
 &lt;h3 id=&quot;further-operations&quot;&gt;Further Operations&lt;/h3&gt;
 
-&lt;p&gt;&lt;strong&gt;n-Tuple&lt;/strong&gt;: An \(n\)-tuple of \(\mathcal{A}\)-objects has generating function \(\mathcal{A}^n/n!\). This corresponds to the arithmetic reasoning earlier, where an \(n\)-tuple of \(\mathcal{A}\)’s is \(\underbrace{\mathcal{A} \text{ and } \mathcal{A} \text{ and } \mathcal{A}\cdots}_{n\text{ times}}\).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;n-Set&lt;/strong&gt;: An \(n\)-Set (unordered tuple) of \(\mathcal{A}\)-objects has generating function \(\mathcal{A}^n/n!\). This corresponds to the arithmetic reasoning earlier, where an \(n\)-set of \(\mathcal{A}\)’s is \(\underbrace{\mathcal{A} \text{ and } \mathcal{A} \text{ and } \mathcal{A}\cdots}_{n\text{ times}}\). The division by \(n!\) is because the \(A\)-objects chosen are unordered, while the product alone produces an ordered series.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Set&lt;/strong&gt;: A &lt;em&gt;set&lt;/em&gt; of \(\mathcal{A}\)-objects is just some (possibly empty) unordered collection of \(\mathcal{A}\)’s. Put another way, a set is a tuple that can be any size, as in&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Set&lt;/strong&gt;: A &lt;em&gt;set&lt;/em&gt; of \(\mathcal{A}\)-objects is just some (possibly empty) unordered collection of \(\mathcal{A}\)’s. Put another way, a set is an $n$-set that can be any size, as in&lt;/p&gt;
 
-\[\text{SET = 0-tuple OR 1-tuple OR 2-tuple OR ...}\]
+\[\text{SET = 0-set OR 1-set OR 2-set OR ...}\]
 
-&lt;p&gt;Leading to \(\sum_{n=0}^\infty \frac{\mathcal{A(x)}^n}{n!} = e^{\mathcal{A}(x)}\).&lt;/p&gt;
+&lt;p&gt;leading to \(\sum_{n=0}^\infty \frac{\mathcal{A(x)}^n}{n!} = e^{\mathcal{A}(x)}\).&lt;/p&gt;
 
 &lt;p&gt;Despite its simplicity, this will be very important for us.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Pointing&lt;/strong&gt;: This one is a bit different. To &lt;em&gt;point&lt;/em&gt; an object is to designate one of its elements as special. If the object has size \(n\) there are \(n\) ways to pick the distinguished element, so the effect is to replace \(x^n\) with \(nx^n\). In other words, pointed \(\mathcal{A}\)-objects are represented by \(x\mathcal{A}&apos;(x)\): derivaties make an appearance.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Point-Deletion&lt;/strong&gt;: This one is a bit different. To &lt;em&gt;point-delete&lt;/em&gt; an object is to designate one of its elements as having ‘disappeared’, replaced by a hole. If the object has size \(n\) there are \(n\) ways to pick the removed element, so the effect is to replace \(x^n\) with \(nx^{n-1}\). In other words, pointed \(\mathcal{A}\)-objects are represented by \(\mathcal{A}&apos;(x)\): derivatives make an appearance!&lt;/p&gt;
+
+&lt;figure class=&quot;post-image&quot;&gt;
+  &lt;img src=&quot;/assets/images/derivative_action.svg&quot; alt=&quot;
+
+    Action of the derivative
+&quot; style=&quot;max-width: 100%&quot; /&gt;
+  &lt;figcaption&gt;&lt;p style=&quot;font-size: .9rem; text-align:center&quot;&gt;The derivative acts to remove an element in all possible ways. Note that we still remember how the element sat inside the diagram.&lt;/p&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;div class=&quot;exercise&quot;&gt;&lt;b&gt;Exercise:&lt;/b&gt; What is the interpretation of \(e^{A+B}=e^{A}e^{B}\)?
+
+&lt;b&gt;Exercise:&lt;/b&gt; What is the interpretation of the product rule \((AB)&apos;=A&apos;B+AB&apos;\)?&lt;/div&gt;
+
+&lt;h2 id=&quot;removing-the-labels&quot;&gt;Removing the labels&lt;/h2&gt;
+
+&lt;p&gt;So far, we are counting &lt;em&gt;labelled&lt;/em&gt; constructions, where a labelled \(\mathcal{A}\)-object is specified by giving both a “shape” and a way of assigning distinct numbers to each of its elements. But the particular assignment of labels doesn’t affect how much the shape contributes to the generating function. The whole effect of labels is just affecting how many times a given shape is counted. So how many is that?&lt;/p&gt;
+
+&lt;p&gt;Labelling an \(n\)-element set with numbers \(1\) through \(n\) is the same thing as ordering the set. There are \(n!\) orderings of a set, so we might expect there to be this many labellings. This is only close. The problem is that the object may have symmetries, making two ‘different’ labellings represent the same structure. For example, a single line segment $\cdot\hspace{-4pt}-\hspace{-4pt}\cdot$ only has one labelling because it is symmetric around its center. If the diagram has a symmetry group $G$, there are only $n!/|G|$ distinct labellings.&lt;/p&gt;
+
+&lt;div class=&quot;exercise&quot;&gt;&lt;b&gt;Exercise:&lt;/b&gt; An $n$-set is specified by $x^n/n!$. How many different ways can an n-set be labelled? How does this explain the coefficient?&lt;/div&gt;
+
+&lt;p&gt;So to count &lt;em&gt;labelled&lt;/em&gt; objects of size $n$, we come up with all possible unlabelled objects of size $n$, and for each object add a factor of $1/n!$ for every distinct way of labelling them. There are $n!/|G|$ such ways, so the overall factor each shape contributes from all its labellings is $1/|G|$. If we remember this we can do away with all the labelling, which is what we’ll start doing from now on.&lt;/p&gt;
 
 &lt;h2 id=&quot;bringing-it-all-together&quot;&gt;Bringing it all Together&lt;/h2&gt;
 
@@ -82,9 +108,39 @@
 \underbrace{\vphantom{\frac g4}\exp}_\text{Set}
 \underbrace{\vphantom{\frac g4}(J^2/2m)}_{\substack{\text{$1/m$ and} \\ \text{Pair($J$)}}}\]
 
+&lt;p&gt;Going from right to left (inside to outside), we start with \(J^2/2\): pairs of \(J\)s. We multiply these (AND) by \(1/m\). A natural way to represent this is to draw an edge between the \(J\)’s to represent the pairing, and then label that edge with a \(1/m\) factor.&lt;/p&gt;
+
+&lt;figure class=&quot;post-image&quot;&gt;
+  &lt;img src=&quot;/assets/images/feynman_intro_singleedge.svg&quot; alt=&quot;
+
+    Action of the derivative
+&quot; style=&quot;max-width: 100%&quot; /&gt;
+  &lt;figcaption&gt;&lt;p style=&quot;font-size: .9rem; text-align:center&quot;&gt;A pair of $J$&apos;s and a $1/m$. Since these are grouped in the expression, it is convenient to represent them by a connected graph.&lt;/p&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Afterwards we simply take take \(\text{Set}\)s of these. In the physics literature, the fact that \(\exp(x^2/2)\) counts pairings over the set of labels is called &lt;em&gt;Wick’s Theorem&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;The next part is where most of the work happens. \(g\frac 1{4!}\partial_J^4\) is \(g \text{ AND } \text{4-set}(J\text{-removals})\). So to act with this operator we remove four \(J\)’s, and include a factor of \(g\) for each time we do this. There is a subtlety here: applying this operator twice is not the same thing as just removing eight elements, since that would forget which elements belong to the same quadruple. We’ll need to remember this information by bunching the holes together in fours, along with their factors of \(g\). One clear way to do this is to just bring the new holes together at a vertex.&lt;/p&gt;
+
+&lt;figure class=&quot;post-image&quot;&gt;
+  &lt;img src=&quot;/assets/images/feynman_intro_example.svg&quot; alt=&quot;
+
+    Replacing four J&apos;s with an interaction vertex.
+&quot; style=&quot;max-width: 100%&quot; /&gt;
+  &lt;figcaption&gt;&lt;p style=&quot;font-size: .9rem; text-align:center&quot;&gt;Replacing four \(J\)&apos;s with an interaction vertex.&lt;/p&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;And again we just take \(\text{Set}\)s of these operations: applying them in all possible ways, any number of times. But this is exactly how to produce the Feynman diagrams of the theory! The $J$-fusion is what physicists would call the “Feynman rules” of the theory. By generating all possible graph-shapes and weighting them according to their symmetries, we’ll construct the terms of the generating function piece by piece.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;By understanding the meaning of each “piece” of a mathematical expression, we see that it essentially spells out a &lt;em&gt;sentence&lt;/em&gt; describing how to build a kind of combinatorial object. We can, without any act of genius, then &lt;em&gt;deduce&lt;/em&gt; that the objects being counted by partition functions are Feynman diagrams, and the sentence gives an algorithm for building them!&lt;/p&gt;
+
+&lt;p&gt;Right now our diagrams are both simple (only one variable!) and redundant (many diagrams with similar pieces are counted separately.&lt;/p&gt;
+
 &lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
 
-&lt;ol class=&quot;bibliography&quot;&gt;&lt;li&gt;&lt;span id=&quot;flajolet_analyticcomb&quot;&gt;[1]P. Flajolet and R. Sedgewick, “Analytic Combinatorics,” p. 761.&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;</content><author><name>Robert Mastragostino</name></author><category term="Feynman-diagrams" /><category term="Physics," /><category term="Combinatorics" /><summary type="html">Last time we got a taste of how Feynman diagrams let us calculate physical quantities. We boiled down a complex physics expression to its bare essentials, calculated the contribution of an example diagram, and got a hint about what links the two. Today we’ll explain the central correspondence driving the theory, so that we understand the meaning of all the ingredients in our expression:</summary></entry><entry><title type="html">Feynman Diagrams I: Introduction and Background</title><link href="/feynman-diagrams/2021/08/28/feynman-diagrams-1-introduction.html" rel="alternate" type="text/html" title="Feynman Diagrams I: Introduction and Background" /><published>2021-08-28T01:12:40-04:00</published><updated>2021-08-28T01:12:40-04:00</updated><id>/feynman-diagrams/2021/08/28/feynman-diagrams-1-introduction</id><content type="html" xml:base="/feynman-diagrams/2021/08/28/feynman-diagrams-1-introduction.html">&lt;p&gt;Feynman diagrams are a common calculation technique in quantum and statistical field theory. They help organize large calculations by relating the structure of a calculation to the structure of a simple diagram, letting us draw out the terms we need to calculate. While we still have to &lt;em&gt;do&lt;/em&gt; the calculation in the usual way, this makes it easier to keep track of all the pieces. The rules for describing Feynman diagrams are often presented as a bit mysterious, but they don’t have to be: the association of combinatorial structures to calculations has by now been fleshed out to a fairly general theory, to the point where it becomes trivial to read off the description of Feynman diagrams from the formula they describe.&lt;/p&gt;
+&lt;ol class=&quot;bibliography&quot;&gt;&lt;li&gt;&lt;span id=&quot;flajolet_analyticcomb&quot;&gt;[1]P. Flajolet and R. Sedgewick, &lt;i&gt;Analytic Combinatorics&lt;/i&gt;. Cambridge University Press, 2009.&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;</content><author><name>Robert Mastragostino</name></author><category term="Feynman-diagrams" /><category term="Physics," /><category term="Combinatorics" /><summary type="html">Last time we got a taste of how Feynman diagrams let us calculate physical quantities. We boiled down a complex physics expression to its bare essentials, calculated the contribution of an example diagram, and got a hint about what links the two. Today we’ll explain the central correspondence driving the theory, so that we understand the meaning of all the ingredients in our expression:</summary></entry><entry><title type="html">Feynman Diagrams I: Introduction and Background</title><link href="/feynman-diagrams/2021/08/28/feynman-diagrams-1-introduction.html" rel="alternate" type="text/html" title="Feynman Diagrams I: Introduction and Background" /><published>2021-08-28T01:12:40-04:00</published><updated>2021-08-28T01:12:40-04:00</updated><id>/feynman-diagrams/2021/08/28/feynman-diagrams-1-introduction</id><content type="html" xml:base="/feynman-diagrams/2021/08/28/feynman-diagrams-1-introduction.html">&lt;p&gt;Feynman diagrams are a common calculation technique in quantum and statistical field theory. They help organize large calculations by relating the structure of a calculation to the structure of a simple diagram, letting us draw out the terms we need to calculate. While we still have to &lt;em&gt;do&lt;/em&gt; the calculation in the usual way, this makes it easier to keep track of all the pieces. The rules for describing Feynman diagrams are often presented as a bit mysterious, but they don’t have to be: the association of combinatorial structures to calculations has by now been fleshed out to a fairly general theory, to the point where it becomes trivial to read off the description of Feynman diagrams from the formula they describe.&lt;/p&gt;
 
 &lt;p&gt;In the following articles we’ll be following what’s known as \(\phi^4\)-theory, where the relationship between the rules and calculations is&lt;/p&gt;
 
